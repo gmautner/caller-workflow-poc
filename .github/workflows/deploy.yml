@@ -1,0 +1,23 @@
+name: Deploy
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  deploy:
+    uses: gmautner/reusable-workflow-poc/.github/workflows/deploy.yml@main
+    with:
+      zone: "ZP01"
+      kamal_vars: |-
+        APP_ENV=production
+        LOG_LEVEL=info
+    secrets:
+      CLOUDSTACK_API_KEY: ${{ secrets.CLOUDSTACK_API_KEY }}
+      CLOUDSTACK_SECRET_KEY: ${{ secrets.CLOUDSTACK_SECRET_KEY }}
+      SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+      KAMAL_SECRETS: |-
+        STRIPE_KEY=${{ secrets.STRIPE_KEY }}
+        SENDGRID_KEY=${{ secrets.SENDGRID_KEY }}
